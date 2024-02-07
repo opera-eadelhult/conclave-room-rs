@@ -293,8 +293,13 @@ impl Room {
         self.connections.get_mut(&connection_index).unwrap()
     }
 
-    pub fn get(&self, connection_index: ConnectionIndex) -> &Connection {
-        self.connections.get(&connection_index).unwrap()
+    pub fn get(&self, connection_index: ConnectionIndex) -> Option<&Connection> {
+        // TODO: just temporary before leader_index is refactored to be an option
+        if !connection_index.is_set() {
+            None
+        } else {
+            self.connections.get(&connection_index)
+        }
     }
 
     pub fn destroy_connection(&mut self, connection_index: ConnectionIndex) {
@@ -329,7 +334,7 @@ mod tests {
             room.on_ping(connection_id, term, true, knowledge, time_in_future);
             room.update(time_in_future);
             assert_eq!(
-                room.get(connection_id).quality.assessment,
+                room.get(connection_id).unwrap().quality.assessment,
                 QualityAssessment::RecommendDisconnect
             );
         }
