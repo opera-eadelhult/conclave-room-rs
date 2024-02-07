@@ -46,6 +46,7 @@ pub enum QualityAssessment {
 }
 
 /// Evaluate room connection quality
+#[derive(Debug)]
 struct ConnectionQuality {
     pub last_ping_at: Instant,
     pub pings_per_second: RateMetrics,
@@ -86,12 +87,14 @@ impl ConnectionQuality {
     }
 }
 
+#[derive(Debug)]
 pub enum ConnectionState {
     Online,
     Disconnected,
 }
 
 /// A Room Connection
+#[derive(Debug)]
 pub struct Connection {
     pub id: ConnectionIndex,
     quality: ConnectionQuality,
@@ -139,6 +142,7 @@ impl Connection {
 }
 
 /// Contains the Room [Connection]s as well the appointed Leader.
+#[derive(Debug)]
 pub struct Room {
     pub id: ConnectionIndex,
     pub connections: HashMap<ConnectionIndex, Connection>,

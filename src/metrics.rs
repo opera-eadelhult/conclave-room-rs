@@ -1,6 +1,7 @@
 use std::time::Instant;
 
 /// Evaluating how many times something occurs every second.
+#[derive(Debug)]
 pub struct RateMetrics {
     count: u32,
     last_calculated_at: Instant,
